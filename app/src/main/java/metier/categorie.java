@@ -30,5 +30,5 @@ public class categorie {
         this.id = id;
     }
 
-    public String toString() { return this.libelle; }
+    public String toString() { return "caegorie : " + libelle; }
 }

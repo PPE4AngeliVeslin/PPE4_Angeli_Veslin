@@ -1,4 +1,4 @@
-package com.example.mangeli.m2lgestitiondesequipes;
+package com.example.benjamin.ppe4;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,8 +13,8 @@ import metier.licencie;
 
 public class LitXml {
 
-	private List<categorie> LesCategories;
-	private List<licencie> LesLicencies;
+	private List<categorie> LesCategories = new ArrayList<categorie>();
+	private List<licencie> LesLicencies = new ArrayList<licencie>();
 	
 	public LitXml(Context context)  {
 		try {

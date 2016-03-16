@@ -1,4 +1,4 @@
-package com.example.mangeli.m2lgestitiondesequipes;
+package com.example.benjamin.ppe4;
 
 import android.util.Log;
 
@@ -8,7 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.lang.Integer;import java.lang.String;import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,8 +53,10 @@ public class MaSaxHandler extends DefaultHandler {
 				   table = "licencie";
                }
            }
+		   Log.i("litxml", table);
 		   if (qName.equals("column")){
 			   colonne = attributes.getValue("name");
+			   Log.i("litxml", colonne);
 			   if (table == "categorie"){
 				   if (colonne == "libelle") {
 					   Categorie.setLibelle(valeur);
