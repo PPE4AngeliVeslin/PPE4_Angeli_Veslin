@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.0.10deb1
+- http://www.phpmyadmin.net
+-
+- Client: localhost
+- Généré le: Mer 09 Mars 2016 à 14:52
+- Version du serveur: 5.6.17-0ubuntu0.14.04.1
+- Version de PHP: 5.5.9-1ubuntu4.2
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="http://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="M2L_G4" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="athlete">
+                CREATE TABLE `athlete` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `nom` text NOT NULL,
+                  `prenom` text NOT NULL,
+                  `idLigue` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `idLigue` (`idLigue`),
+                  CONSTRAINT `fk_ligue_athlete` FOREIGN KEY (`idLigue`) REFERENCES `ligue` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="auth_cas">
+                CREATE TABLE `auth_cas` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `user_id` int(11) DEFAULT NULL,
+                  `created_on` datetime DEFAULT NULL,
+                  `service` varchar(512) DEFAULT NULL,
+                  `ticket` varchar(512) DEFAULT NULL,
+                  `renew` char(1) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `user_id__idx` (`user_id`),
+                  CONSTRAINT `auth_cas_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            </pma:table>
+            <pma:table name="auth_event">
+                CREATE TABLE `auth_event` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `time_stamp` datetime DEFAULT NULL,
+                  `client_ip` varchar(512) DEFAULT NULL,
+                  `user_id` int(11) DEFAULT NULL,
+                  `origin` varchar(512) DEFAULT NULL,
+                  `description` longtext,
+                  PRIMARY KEY (`id`),
+                  KEY `user_id__idx` (`user_id`),
+                  CONSTRAINT `auth_event_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+            </pma:table>
+            <pma:table name="auth_group">
+                CREATE TABLE `auth_group` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `role` varchar(512) DEFAULT NULL,
+                  `description` longtext,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+            </pma:table>
+            <pma:table name="auth_membership">
+                CREATE TABLE `auth_membership` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `user_id` int(11) DEFAULT NULL,
+                  `group_id` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `user_id__idx` (`user_id`),
+                  KEY `group_id__idx` (`group_id`),
+                  CONSTRAINT `auth_membership_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+                  CONSTRAINT `auth_membership_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+            </pma:table>
+            <pma:table name="auth_permission">
+                CREATE TABLE `auth_permission` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `group_id` int(11) DEFAULT NULL,
+                  `name` varchar(512) DEFAULT NULL,
+                  `table_name` varchar(512) DEFAULT NULL,
+                  `record_id` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `group_id__idx` (`group_id`),
+                  CONSTRAINT `auth_permission_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            </pma:table>
+            <pma:table name="auth_user">
+                CREATE TABLE `auth_user` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `first_name` varchar(128) DEFAULT NULL,
+                  `last_name` varchar(128) DEFAULT NULL,
+                  `email` varchar(512) DEFAULT NULL,
+                  `password` varchar(512) DEFAULT NULL,
+                  `registration_key` varchar(512) DEFAULT NULL,
+                  `reset_password_key` varchar(512) DEFAULT NULL,
+                  `registration_id` varchar(512) DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+            </pma:table>
+            <pma:table name="categorie">
+                CREATE TABLE `categorie` (
+                  `id` int(11) NOT NULL,
+                  `libelle` varchar(32) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="club">
+                CREATE TABLE `club` (
+                  `id` int(11) NOT NULL,
+                  `libelle` varchar(20) NOT NULL,
+                  `idLigue` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `idLigue` (`idLigue`),
+                  CONSTRAINT `fk_ligue_club` FOREIGN KEY (`idLigue`) REFERENCES `ligue` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="contenir">
+                CREATE TABLE `contenir` (
+                  `idJBFD` int(11) NOT NULL,
+                  `idFormationJBFD` int(11) NOT NULL,
+                  PRIMARY KEY (`idJBFD`,`idFormationJBFD`),
+                  KEY `fk_contenir_formationJBFD` (`idFormationJBFD`),
+                  CONSTRAINT `fk_contenir_formationJBFD` FOREIGN KEY (`idFormationJBFD`) REFERENCES `formationJBFD` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_contenir_JBFD` FOREIGN KEY (`idJBFD`) REFERENCES `JBFD` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="dateOlympique">
+                CREATE TABLE `dateOlympique` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `dateOlympique` date NOT NULL,
+                  `idAthlete` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `idAthlete` (`idAthlete`),
+                  CONSTRAINT `FK_athlete_dateOlympique` FOREIGN KEY (`idAthlete`) REFERENCES `athlete` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="equipe">
+                CREATE TABLE `equipe` (
+                  `id` int(11) NOT NULL,
+                  `libelle` varchar(64) NOT NULL,
+                  `idClub` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `idClub` (`idClub`),
+                  CONSTRAINT `fk_club_equipe` FOREIGN KEY (`idClub`) REFERENCES `club` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="evenement">
+                CREATE TABLE `evenement` (
+                  `id` int(11) NOT NULL,
+                  `nom` text NOT NULL,
+                  `adresse` text NOT NULL,
+                  `remarques` text NOT NULL,
+                  `site` text NOT NULL,
+                  `dateDebut` date NOT NULL,
+                  `dateFin` date NOT NULL,
+                  `idLigue` int(11) NOT NULL,
+                  KEY `idLigue` (`idLigue`),
+                  CONSTRAINT `fk_ligue_evenement` FOREIGN KEY (`idLigue`) REFERENCES `ligue` (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="formation">
+                CREATE TABLE `formation` (
+                  `id` int(11) NOT NULL,
+                  `libelle` varchar(32) NOT NULL,
+                  `lieu` text NOT NULL,
+                  `intervenant` text NOT NULL,
+                  `audience` text NOT NULL,
+                  `objectif` text NOT NULL,
+                  `prerequis` text NOT NULL,
+                  `contenus` text NOT NULL,
+                  `cout` int(11) NOT NULL,
+                  `repas` text NOT NULL,
+                  `dateLimite` date NOT NULL,
+                  `dateDebut` date NOT NULL,
+                  `dateFin` date NOT NULL,
+                  `heureDebut` int(11) NOT NULL,
+                  `heureFin` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="formationJBFD">
+                CREATE TABLE `formationJBFD` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `theme` text NOT NULL,
+                  `lieu` text NOT NULL,
+                  `dateDebut` date NOT NULL,
+                  `dateFin` date NOT NULL,
+                  `heureDebut` int(11) NOT NULL,
+                  `heureFin` int(11) NOT NULL,
+                  `intervenant` text NOT NULL,
+                  `contenu` text NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="inscriptionCROSL">
+                CREATE TABLE `inscriptionCROSL` (
+                  `idPersonnel` int(11) NOT NULL,
+                  `idFormation` int(11) NOT NULL,
+                  `dateInscription` date NOT NULL,
+                  PRIMARY KEY (`idPersonnel`,`idFormation`),
+                  KEY `fk_inscriptionCROSL_formation` (`idFormation`),
+                  CONSTRAINT `fk_inscriptionCROSL_formation` FOREIGN KEY (`idFormation`) REFERENCES `formation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_inscriptionCROSL_personnel` FOREIGN KEY (`idPersonnel`) REFERENCES `personel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="inscriptionJBFD">
+                CREATE TABLE `inscriptionJBFD` (
+                  `idPersonnel` int(11) NOT NULL,
+                  `idJBFD` int(11) NOT NULL,
+                  PRIMARY KEY (`idPersonnel`,`idJBFD`),
+                  KEY `fk_inscriptionJBFD_formationJBFD` (`idJBFD`),
+                  CONSTRAINT `fk_inscriptionJBFD_formationJBFD` FOREIGN KEY (`idJBFD`) REFERENCES `formationJBFD` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_inscriptionJBFD_personnel` FOREIGN KEY (`idPersonnel`) REFERENCES `participer` (`idPersonnel`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="JBFD">
+                CREATE TABLE `JBFD` (
+                  `id` int(11) NOT NULL,
+                  `promotion` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="licencie">
+                CREATE TABLE `licencie` (
+                  `id` int(11) NOT NULL,
+                  `nom` varchar(32) NOT NULL,
+                  `prenom` varchar(32) NOT NULL,
+                  `nomUtilisateur` varchar(32) NOT NULL,
+                  `mdp` varchar(15) NOT NULL,
+                  `idEquipe` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `idEquipe` (`idEquipe`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="ligue">
+                CREATE TABLE `ligue` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `nom` varchar(512) DEFAULT NULL,
+                  `adresseRue` varchar(512) DEFAULT NULL,
+                  `ville` varchar(512) DEFAULT NULL,
+                  `cp` varchar(512) DEFAULT NULL,
+                  `tel` varchar(512) DEFAULT NULL,
+                  `URLSiteWeb` varchar(512) DEFAULT NULL,
+                  `emailContact` varchar(512) DEFAULT NULL,
+                  `discipline` text NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+            </pma:table>
+            <pma:table name="participer">
+                CREATE TABLE `participer` (
+                  `idPersonnel` int(11) NOT NULL,
+                  `idFormation` int(11) NOT NULL,
+                  PRIMARY KEY (`idPersonnel`,`idFormation`),
+                  KEY `fk_inscriptionCROSL_formation2` (`idFormation`),
+                  CONSTRAINT `fk_inscriptionCROSL_formation2` FOREIGN KEY (`idFormation`) REFERENCES `formation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_inscriptionCROSL_personnel2` FOREIGN KEY (`idPersonnel`) REFERENCES `personel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="personel">
+                CREATE TABLE `personel` (
+                  `id` int(11) NOT NULL,
+                  `nom` varchar(32) NOT NULL,
+                  `prenom` varchar(32) NOT NULL,
+                  `adresse` varchar(32) NOT NULL,
+                  `tel` varchar(32) NOT NULL,
+                  `idLigue` int(11) NOT NULL,
+                  `password` varchar(15) NOT NULL,
+                  `nomUtilisateur` varchar(30) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `idLigue` (`idLigue`),
+                  CONSTRAINT `fk_personnel_ligue` FOREIGN KEY (`idLigue`) REFERENCES `ligue` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="responsable_ligue">
+                CREATE TABLE `responsable_ligue` (
+                  `idPers` int(11) NOT NULL,
+                  PRIMARY KEY (`idPers`),
+                  CONSTRAINT `fk_responsable_personel` FOREIGN KEY (`idPers`) REFERENCES `personel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="services">
+                CREATE TABLE `services` (
+                  `id` int(11) NOT NULL,
+                  `libelle` varchar(32) NOT NULL,
+                  `description` longtext NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Base de données: 'M2L_G4'
+    -->
+    <database name="M2L_G4">
+        <!-- Table athlete -->
+        <table name="athlete">
+            <column name="id">1</column>
+            <column name="nom">Landrain</column>
+            <column name="prenom">Timothee</column>
+            <column name="idLigue">1</column>
+        </table>
+        <table name="athlete">
+            <column name="id">4</column>
+            <column name="nom">angeli</column>
+            <column name="prenom">martin</column>
+            <column name="idLigue">2</column>
+        </table>
+        <table name="athlete">
+            <column name="id">5</column>
+            <column name="nom">dave</column>
+            <column name="prenom">mustainul</column>
+            <column name="idLigue">2</column>
+        </table>
+        <!-- Table auth_cas -->
+        <!-- Table auth_event -->
+        <table name="auth_event">
+            <column name="id">1</column>
+            <column name="time_stamp">2015-11-04 17:22:05</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">2</column>
+            <column name="time_stamp">2015-11-13 13:39:05</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">3</column>
+            <column name="time_stamp">2015-11-13 13:50:19</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">4</column>
+            <column name="time_stamp">2015-11-13 14:00:50</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">5</column>
+            <column name="time_stamp">2015-11-13 14:07:54</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">6</column>
+            <column name="time_stamp">2015-11-13 14:08:02</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">7</column>
+            <column name="time_stamp">2015-11-13 15:26:27</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">8</column>
+            <column name="time_stamp">2015-11-13 15:32:41</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">9</column>
+            <column name="time_stamp">2015-11-18 14:04:06</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">10</column>
+            <column name="time_stamp">2015-11-18 14:19:07</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">11</column>
+            <column name="time_stamp">2015-11-18 14:29:03</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">12</column>
+            <column name="time_stamp">2015-11-18 14:36:20</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">13</column>
+            <column name="time_stamp">2015-11-18 14:36:32</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">14</column>
+            <column name="time_stamp">2015-11-18 14:36:38</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">15</column>
+            <column name="time_stamp">2015-11-18 14:36:47</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">16</column>
+            <column name="time_stamp">2015-11-18 14:37:48</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">17</column>
+            <column name="time_stamp">2015-11-18 14:37:55</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">18</column>
+            <column name="time_stamp">2015-11-18 14:47:01</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">19</column>
+            <column name="time_stamp">2015-11-18 14:47:13</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">20</column>
+            <column name="time_stamp">2015-11-18 13:34:49</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">21</column>
+            <column name="time_stamp">2015-11-18 13:39:55</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">22</column>
+            <column name="time_stamp">2015-11-18 13:40:08</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">23</column>
+            <column name="time_stamp">2015-11-18 13:40:34</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">24</column>
+            <column name="time_stamp">2015-11-18 13:44:14</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">25</column>
+            <column name="time_stamp">2015-11-18 15:08:20</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">26</column>
+            <column name="time_stamp">2015-11-18 15:10:10</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">27</column>
+            <column name="time_stamp">2015-11-18 15:17:26</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">28</column>
+            <column name="time_stamp">2015-11-18 15:38:47</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">29</column>
+            <column name="time_stamp">2015-11-18 15:45:55</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">30</column>
+            <column name="time_stamp">2015-11-18 16:13:38</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">31</column>
+            <column name="time_stamp">2015-11-18 17:15:31</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">32</column>
+            <column name="time_stamp">2015-11-18 17:21:21</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">NULL</column>
+            <column name="origin">auth</column>
+            <column name="description">Group 5 created</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">33</column>
+            <column name="time_stamp">2015-11-18 17:21:21</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">3</column>
+            <column name="origin">auth</column>
+            <column name="description">User 3 Registered</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">34</column>
+            <column name="time_stamp">2015-11-18 17:21:31</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">3</column>
+            <column name="origin">auth</column>
+            <column name="description">User 3 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">35</column>
+            <column name="time_stamp">2015-11-18 17:21:37</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">3</column>
+            <column name="origin">auth</column>
+            <column name="description">User 3 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">36</column>
+            <column name="time_stamp">2015-11-18 17:22:38</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">3</column>
+            <column name="origin">auth</column>
+            <column name="description">User 3 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">37</column>
+            <column name="time_stamp">2015-12-02 14:00:04</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">38</column>
+            <column name="time_stamp">2015-12-02 16:21:42</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">39</column>
+            <column name="time_stamp">2015-12-02 16:32:29</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">40</column>
+            <column name="time_stamp">2015-12-02 16:32:36</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">4</column>
+            <column name="origin">auth</column>
+            <column name="description">User 4 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">41</column>
+            <column name="time_stamp">2015-12-02 16:32:40</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">4</column>
+            <column name="origin">auth</column>
+            <column name="description">User 4 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">42</column>
+            <column name="time_stamp">2015-12-02 16:32:48</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">5</column>
+            <column name="origin">auth</column>
+            <column name="description">User 5 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">43</column>
+            <column name="time_stamp">2015-12-02 16:32:53</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">5</column>
+            <column name="origin">auth</column>
+            <column name="description">User 5 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">44</column>
+            <column name="time_stamp">2015-12-02 16:56:35</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">45</column>
+            <column name="time_stamp">2015-12-02 16:59:11</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">46</column>
+            <column name="time_stamp">2015-12-02 16:59:19</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">6</column>
+            <column name="origin">auth</column>
+            <column name="description">User 6 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">47</column>
+            <column name="time_stamp">2015-12-02 17:00:19</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">48</column>
+            <column name="time_stamp">2015-12-02 17:23:50</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">4</column>
+            <column name="origin">auth</column>
+            <column name="description">User 4 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">49</column>
+            <column name="time_stamp">2015-12-02 17:32:18</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">6</column>
+            <column name="origin">auth</column>
+            <column name="description">User 6 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">50</column>
+            <column name="time_stamp">2015-12-02 16:27:54</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-in</column>
+        </table>
+        <table name="auth_event">
+            <column name="id">51</column>
+            <column name="time_stamp">2015-12-02 16:28:00</column>
+            <column name="client_ip">127.0.0.1</column>
+            <column name="user_id">1</column>
+            <column name="origin">auth</column>
+            <column name="description">User 1 Logged-out</column>
+        </table>
+        <!-- Table auth_group -->
+        <table name="auth_group">
+            <column name="id">1</column>
+            <column name="role">Personnel</column>
+            <column name="description">NULL</column>
+        </table>
+        <table name="auth_group">
+            <column name="id">4</column>
+            <column name="role">Administration</column>
+            <column name="description"></column>
+        </table>
+        <table name="auth_group">
+            <column name="id">5</column>
+            <column name="role">user_3</column>
+            <column name="description">Group uniquely assigned to user 3</column>
+        </table>
+        <table name="auth_group">
+            <column name="id">6</column>
+            <column name="role">EmployéCROSL</column>
+            <column name="description"></column>
+        </table>
+        <table name="auth_group">
+            <column name="id">7</column>
+            <column name="role">ResponsablesCROSL</column>
+            <column name="description"></column>
+        </table>
+        <table name="auth_group">
+            <column name="id">8</column>
+            <column name="role">ResponsableLigue</column>
+            <column name="description"></column>
+        </table>
+        <!-- Table auth_membership -->
+        <table name="auth_membership">
+            <column name="id">5</column>
+            <column name="user_id">1</column>
+            <column name="group_id">4</column>
+        </table>
+        <table name="auth_membership">
+            <column name="id">6</column>
+            <column name="user_id">3</column>
+            <column name="group_id">5</column>
+        </table>
+        <table name="auth_membership">
+            <column name="id">7</column>
+            <column name="user_id">4</column>
+            <column name="group_id">6</column>
+        </table>
+        <table name="auth_membership">
+            <column name="id">8</column>
+            <column name="user_id">5</column>
+            <column name="group_id">8</column>
+        </table>
+        <table name="auth_membership">
+            <column name="id">9</column>
+            <column name="user_id">6</column>
+            <column name="group_id">1</column>
+        </table>
+        <!-- Table auth_permission -->
+        <!-- Table auth_user -->
+        <table name="auth_user">
+            <column name="id">1</column>
+            <column name="first_name">Admin</column>
+            <column name="last_name">Admin</column>
+            <column name="email">admin@admin.admin</column>
+            <column name="password">pbkdf2(1000,20,sha512)$9a3a21a880b9e027$735f3181ad6d6e22770f1ac4a44aabbd3fa8e04d</column>
+            <column name="registration_key"></column>
+            <column name="reset_password_key"></column>
+            <column name="registration_id"></column>
+        </table>
+        <table name="auth_user">
+            <column name="id">3</column>
+            <column name="first_name">Eraud</column>
+            <column name="last_name">Clément</column>
+            <column name="email">clement.eraud@gmail.com</column>
+            <column name="password">pbkdf2(1000,20,sha512)$996de3b59314fe10$9820ab99e4619f41671ffb16207da9a679b8844b</column>
+            <column name="registration_key"></column>
+            <column name="reset_password_key"></column>
+            <column name="registration_id"></column>
+        </table>
+        <table name="auth_user">
+            <column name="id">4</column>
+            <column name="first_name">EmployeCROSL</column>
+            <column name="last_name">EmployeCROSL</column>
+            <column name="email">employe@crosl.fr</column>
+            <column name="password">pbkdf2(1000,20,sha512)$b9a7d5b01523aa0e$74611807eced04f598a2ce4d0ff0dd04cabc13f9</column>
+            <column name="registration_key"></column>
+            <column name="reset_password_key"></column>
+            <column name="registration_id"></column>
+        </table>
+        <table name="auth_user">
+            <column name="id">5</column>
+            <column name="first_name">responsableLigue</column>
+            <column name="last_name">responsableLigue</column>
+            <column name="email">responsable@ligue.fr</column>
+            <column name="password">pbkdf2(1000,20,sha512)$821c5c208dd9993f$5c050f714f0d61a59cb9ff59a80ee42f5ff10330</column>
+            <column name="registration_key"></column>
+            <column name="reset_password_key"></column>
+            <column name="registration_id"></column>
+        </table>
+        <table name="auth_user">
+            <column name="id">6</column>
+            <column name="first_name">jean</column>
+            <column name="last_name">jean</column>
+            <column name="email">jean@jean.jean</column>
+            <column name="password">pbkdf2(1000,20,sha512)$908443b43c1b9e7a$1f89437b59318eacb39ec329375f5d7283680aa7</column>
+            <column name="registration_key"></column>
+            <column name="reset_password_key"></column>
+            <column name="registration_id"></column>
+        </table>
+        <!-- Table categorie -->
+        <table name="categorie">
+            <column name="id">1</column>
+            <column name="libelle">poussin</column>
+        </table>
+        <table name="categorie">
+            <column name="id">2</column>
+            <column name="libelle">benjamin</column>
+        </table>
+        <table name="categorie">
+            <column name="id">3</column>
+            <column name="libelle">minime</column>
+        </table>
+        <table name="categorie">
+            <column name="id">4</column>
+            <column name="libelle">cadet</column>
+        </table>
+        <table name="categorie">
+            <column name="id">5</column>
+            <column name="libelle">junior</column>
+        </table>
+        <table name="categorie">
+            <column name="id">6</column>
+            <column name="libelle">senior</column>
+        </table>
+        <!-- Table club -->
+        <table name="club">
+            <column name="id">1</column>
+            <column name="libelle">Nancy Aïkido</column>
+            <column name="idLigue">2</column>
+        </table>
+        <table name="club">
+            <column name="id">2</column>
+            <column name="libelle">Metz Aïkido</column>
+            <column name="idLigue">2</column>
+        </table>
+        <table name="club">
+            <column name="id">3</column>
+            <column name="libelle">Verdun Aerostation</column>
+            <column name="idLigue">1</column>
+        </table>
+        <!-- Table contenir -->
+        <!-- Table dateOlympique -->
+        <table name="dateOlympique">
+            <column name="id">7</column>
+            <column name="dateOlympique">2015-11-24</column>
+            <column name="idAthlete">1</column>
+        </table>
+        <table name="dateOlympique">
+            <column name="id">8</column>
+            <column name="dateOlympique">2015-11-26</column>
+            <column name="idAthlete">4</column>
+        </table>
+        <table name="dateOlympique">
+            <column name="id">10</column>
+            <column name="dateOlympique">2015-11-12</column>
+            <column name="idAthlete">5</column>
+        </table>
+        <!-- Table equipe -->
+        <table name="equipe">
+            <column name="id">1</column>
+            <column name="libelle">Les petits loups</column>
+            <column name="idClub">1</column>
+        </table>
+        <table name="equipe">
+            <column name="id">2</column>
+            <column name="libelle">les ours</column>
+            <column name="idClub">2</column>
+        </table>
+        <table name="equipe">
+            <column name="id">3</column>
+            <column name="libelle">Team rockette</column>
+            <column name="idClub">2</column>
+        </table>
+        <!-- Table evenement -->
+        <table name="evenement">
+            <column name="id">1</column>
+            <column name="nom">Metz Judo Jujitsu</column>
+            <column name="adresse">Complexe Saint Syphorien, 57000 Metz</column>
+            <column name="remarques">Tournoi International Metz Moselle - 08H A 18H</column>
+            <column name="site"></column>
+            <column name="dateDebut">2014-10-18</column>
+            <column name="dateFin">2014-10-19</column>
+            <column name="idLigue">1</column>
+        </table>
+        <table name="evenement">
+            <column name="id">2</column>
+            <column name="nom">Handball - Match Metz Handball</column>
+            <column name="adresse">5, Avenue Louis le Débonnaire, 57000 Metz</column>
+            <column name="remarques">Aux arènes de Metz</column>
+            <column name="site">http://www.metz-handball.com</column>
+            <column name="dateDebut">2014-09-27</column>
+            <column name="dateFin">2014-09-27</column>
+            <column name="idLigue">2</column>
+        </table>
+        <!-- Table formation -->
+        <table name="formation">
+            <column name="id">1</column>
+            <column name="libelle">Chameau</column>
+            <column name="lieu">Le désert, évidemment.</column>
+            <column name="intervenant">Jean-Yves</column>
+            <column name="audience">Jeune adultes puerils</column>
+            <column name="objectif">Pas la finalité, ça c'est sûr.</column>
+            <column name="prerequis">Processeur quad core</column>
+            <column name="contenus">-Course en sac
+-Navigation sur internet explorer
+-Concours de prouts</column>
+            <column name="cout">540</column>
+            <column name="repas">Tu gères ta bouffe</column>
+            <column name="dateLimite">2015-12-31</column>
+            <column name="dateDebut">2016-01-11</column>
+            <column name="dateFin">2016-01-30</column>
+            <column name="heureDebut">15</column>
+            <column name="heureFin">22</column>
+        </table>
+        <!-- Table formationJBFD -->
+        <table name="formationJBFD">
+            <column name="id">1</column>
+            <column name="theme">Bien se nourrir au quotidien.</column>
+            <column name="lieu">2 rue du chameau</column>
+            <column name="dateDebut">2015-12-06</column>
+            <column name="dateFin">2015-12-12</column>
+            <column name="heureDebut">13</column>
+            <column name="heureFin">18</column>
+            <column name="intervenant">Timothée Landrain</column>
+            <column name="contenu">-Comment choisir son grec.
+-McDonald, Quick ou Burger King ?
+-Se faire vomir sans danger.</column>
+        </table>
+        <table name="formationJBFD">
+            <column name="id">2</column>
+            <column name="theme">Lutter contre les hémorroïdes !</column>
+            <column name="lieu">Bamako</column>
+            <column name="dateDebut">2015-12-06</column>
+            <column name="dateFin">2015-12-31</column>
+            <column name="heureDebut">8</column>
+            <column name="heureFin">18</column>
+            <column name="intervenant">Jean Marie</column>
+            <column name="contenu">Nous n'avons pas d'information pour le moment.</column>
+        </table>
+        <!-- Table inscriptionCROSL -->
+        <table name="inscriptionCROSL">
+            <column name="idPersonnel">1</column>
+            <column name="idFormation">1</column>
+            <column name="dateInscription">2015-12-01</column>
+        </table>
+        <table name="inscriptionCROSL">
+            <column name="idPersonnel">2</column>
+            <column name="idFormation">1</column>
+            <column name="dateInscription">2015-12-02</column>
+        </table>
+        <table name="inscriptionCROSL">
+            <column name="idPersonnel">3</column>
+            <column name="idFormation">1</column>
+            <column name="dateInscription">2015-12-15</column>
+        </table>
+        <table name="inscriptionCROSL">
+            <column name="idPersonnel">4</column>
+            <column name="idFormation">1</column>
+            <column name="dateInscription">2015-12-07</column>
+        </table>
+        <!-- Table inscriptionJBFD -->
+        <!-- Table JBFD -->
+        <table name="JBFD">
+            <column name="id">1</column>
+            <column name="promotion">2015</column>
+        </table>
+        <!-- Table licencie -->
+        <table name="licencie">
+            <column name="id">1</column>
+            <column name="nom">Eraud</column>
+            <column name="prenom">Clément</column>
+            <column name="nomUtilisateur">Ceraud</column>
+            <column name="mdp">password</column>
+            <column name="idEquipe">0</column>
+        </table>
+        <table name="licencie">
+            <column name="id">2</column>
+            <column name="nom">landrain</column>
+            <column name="prenom">timothee</column>
+            <column name="nomUtilisateur">tlandrain</column>
+            <column name="mdp">passord</column>
+            <column name="idEquipe">0</column>
+        </table>
+        <table name="licencie">
+            <column name="id">3</column>
+            <column name="nom">veslin</column>
+            <column name="prenom">benjamin</column>
+            <column name="nomUtilisateur">bveslin</column>
+            <column name="mdp">password</column>
+            <column name="idEquipe">0</column>
+        </table>
+        <table name="licencie">
+            <column name="id">4</column>
+            <column name="nom">angeli</column>
+            <column name="prenom">martin</column>
+            <column name="nomUtilisateur">mangeli</column>
+            <column name="mdp">password</column>
+            <column name="idEquipe">0</column>
+        </table>
+        <!-- Table ligue -->
+        <table name="ligue">
+            <column name="id">1</column>
+            <column name="nom">Aérostation - Ligue de Lorraine</column>
+            <column name="adresseRue">Aérodrome de Chambley Planet’Air  - 11, bd A. de Saint-Exupéry 54470 HAGEVILLE</column>
+            <column name="ville">HAGEVILLE</column>
+            <column name="cp">54470</column>
+            <column name="tel">0382337777</column>
+            <column name="URLSiteWeb">www.ffaerostation.org</column>
+            <column name="emailContact">pbp@pilatre-de-rozier.com
+ </column>
+            <column name="discipline">Aérostation</column>
+        </table>
+        <table name="ligue">
+            <column name="id">2</column>
+            <column name="nom">Aïkido F.F.A.A.A.</column>
+            <column name="adresseRue">21, rue Aspirant Buffet</column>
+            <column name="ville">VERDUN</column>
+            <column name="cp">55100</column>
+            <column name="tel">0984553765</column>
+            <column name="URLSiteWeb">www.aikido-lorraine.fr</column>
+            <column name="emailContact">lorraine@aikido.com.fr</column>
+            <column name="discipline">Aïkido</column>
+        </table>
+        <table name="ligue">
+            <column name="id">4</column>
+            <column name="nom">Kwang Myung Dojang</column>
+            <column name="adresseRue">21, rue Aspirant Buffet</column>
+            <column name="ville">VERDUN</column>
+            <column name="cp">55100</column>
+            <column name="tel">0984553765</column>
+            <column name="URLSiteWeb">www.kwangmyungdojang.fr</column>
+            <column name="emailContact">taekwondo@lorraine.fr</column>
+            <column name="discipline">Taekwondo</column>
+        </table>
+        <!-- Table participer -->
+        <!-- Table personel -->
+        <table name="personel">
+            <column name="id">1</column>
+            <column name="nom">Eraud</column>
+            <column name="prenom">Clément</column>
+            <column name="adresse">nantes</column>
+            <column name="tel">02 54 96 38 41</column>
+            <column name="idLigue">4</column>
+            <column name="password">password</column>
+            <column name="nomUtilisateur">EraudClement</column>
+        </table>
+        <table name="personel">
+            <column name="id">2</column>
+            <column name="nom">Landrain</column>
+            <column name="prenom">Timothée</column>
+            <column name="adresse">nantes</column>
+            <column name="tel">02 54 68 94 75</column>
+            <column name="idLigue">2</column>
+            <column name="password"></column>
+            <column name="nomUtilisateur"></column>
+        </table>
+        <table name="personel">
+            <column name="id">3</column>
+            <column name="nom">Veslin</column>
+            <column name="prenom">Benjamin</column>
+            <column name="adresse">nantes</column>
+            <column name="tel">02 64 57 73 18</column>
+            <column name="idLigue">1</column>
+            <column name="password"></column>
+            <column name="nomUtilisateur"></column>
+        </table>
+        <table name="personel">
+            <column name="id">4</column>
+            <column name="nom">Angeli</column>
+            <column name="prenom">Martin</column>
+            <column name="adresse">nantes</column>
+            <column name="tel">02 64 35 81 97</column>
+            <column name="idLigue">1</column>
+            <column name="password"></column>
+            <column name="nomUtilisateur"></column>
+        </table>
+        <!-- Table responsable_ligue -->
+        <table name="responsable_ligue">
+            <column name="idPers">1</column>
+        </table>
+        <!-- Table services -->
+        <table name="services">
+            <column name="id">1</column>
+            <column name="libelle">Accès Internet</column>
+            <column name="description">Les ligues disposent d'un accès Internet mutualisé que la M2L loue à un prestataire extérieur.</column>
+        </table>
+        <table name="services">
+            <column name="id">2</column>
+            <column name="libelle">Accès Wifi</column>
+            <column name="description">Dans tous les espaces, un réseau Wifi &quot;visiteurs&quot; est disponible, avec une clé WPA renouvelée régulièrement et communiquée aux ligues. Ce réseau ne permet que l'accès à Internet.</column>
+        </table>
+    </database>
+</pma_xml_export>
