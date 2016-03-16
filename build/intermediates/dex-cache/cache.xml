@@ -2,6 +2,7 @@
 <items version="2" >
 
     <item
+<<<<<<< HEAD
         jar="C:\Users\mangeli\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
         jumboMode="false"
         revision="23.0.2"
@@ -14,6 +15,34 @@
         revision="23.0.2"
         sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
         <dex dex="C:\Users\mangeli\AndroidStudioProjects\M2LGestitiondesequipes\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-855ec080c15431c9cd9ec97df4d6be0593692b2a.jar" />
+=======
+        jar="C:\Users\Benjamin\Desktop\ppe4\PPE4\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="C:\Users\Benjamin\Desktop\ppe4\PPE4\app\build\intermediates\pre-dexed\debug\classes-94b6b6acc8f19207856262757ca525430b97ae25.jar" />
+    </item>
+    <item
+        jar="C:\Users\Benjamin\Desktop\ppe4\PPE4_Angeli_Veslin\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
+        <dex dex="C:\Users\Benjamin\Desktop\ppe4\PPE4_Angeli_Veslin\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-39a96ad7b60a3e21070ffedb2464ad367ea4de62.jar" />
+    </item>
+    <item
+        jar="C:\Users\Benjamin\Desktop\ppe4\PPE4_Angeli_Veslin\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="C:\Users\Benjamin\Desktop\ppe4\PPE4_Angeli_Veslin\app\build\intermediates\pre-dexed\debug\classes-fe9f3fca5537afd6fd7cca59369d4ce14feeb0a6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Benjamin\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="C:\Users\Benjamin\Desktop\ppe4\PPE4\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-df5251e305cb45f48b8c60cfe6577dfd838b8af8.jar" />
+>>>>>>> origin/master
     </item>
     <item
         jar="C:\Users\mangeli\AndroidStudioProjects\M2LGestitiondesequipes\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
@@ -23,11 +52,26 @@
         <dex dex="C:\Users\mangeli\AndroidStudioProjects\M2LGestitiondesequipes\app\build\intermediates\pre-dexed\debug\classes-0ad11c634c34821d8795c24362e7685a54f9c4f9.jar" />
     </item>
     <item
+<<<<<<< HEAD
         jar="C:\Users\mangeli\AndroidStudioProjects\M2LGestitiondesequipes\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
         <dex dex="C:\Users\mangeli\AndroidStudioProjects\M2LGestitiondesequipes\app\build\intermediates\pre-dexed\debug\classes-5ede782c49494450cfca1000f34a7124b862a9bb.jar" />
+=======
+        jar="C:\Users\Benjamin\Desktop\ppe4\PPE4_Angeli_Veslin\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="C:\Users\Benjamin\Desktop\ppe4\PPE4_Angeli_Veslin\app\build\intermediates\pre-dexed\debug\classes-86cda8952b9758aa3c52f2c4efc8de01cc131c73.jar" />
+    </item>
+    <item
+        jar="C:\Users\Benjamin\Desktop\ppe4\PPE4\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="C:\Users\Benjamin\Desktop\ppe4\PPE4\app\build\intermediates\pre-dexed\debug\classes-c9bd89b9bb25fc46d1b53e1b1765c172208d67f0.jar" />
+>>>>>>> origin/master
     </item>
 
 </items>
