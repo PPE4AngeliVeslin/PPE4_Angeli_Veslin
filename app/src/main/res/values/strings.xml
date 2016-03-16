@@ -1,15 +1,3 @@
 <resources>
-    <string name="app_name">PPE4</string>
-    <string name="login">Identifiant :</string>
-    <string name="mdp">Mot de passe :</string>
-    <string name="valider">Valider</string>
-    <string name="ajout">Ajouter un joueur</string>
-    <string name="constitution">Constitution de l\'équipe</string>
-    <string name="creerEquipe">Créer équipe</string>
-    <string-array name="joueurs">
-        <item>Don Quixote</item>
-        <item>Sancho Panza</item>
-        <item>Teresa Panza</item>
-        <item>Dulcinea del Toboso</item>
-    </string-array>
+    <string name="app_name">M2L Gestition des equipes</string>
 </resources>
